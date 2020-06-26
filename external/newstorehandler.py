@@ -7,4 +7,4 @@ class NewstoreHandler:
         self.redditNews = reddit.RedditApi(self.q)
 
     def getAllNews(self):
-        return self.apiNews + self.redditNews
+        return self.apiNews.getNews() + self.redditNews.getNews()
