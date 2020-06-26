@@ -8,6 +8,8 @@ from .serializers import NewsSerializer, KeywordsSerializer
 
 import datetime as dt
 
+from external import newstorehandler as nh
+
 # Create your views here.
 
 @api_view(['GET'])
@@ -43,7 +45,7 @@ def news_list(request):
         if (len(newsList) == 0):
             # return database response
             print('from api')
-            newsList = apinews.NewsApi(searchCategory).getNews()
+            newsList = nh.NewstoreHandler(searchCategory).getAllNews()
 
             nextTime = dt.datetime.now() + dt.timedelta(minutes=15)
 
