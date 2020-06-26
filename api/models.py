@@ -11,3 +11,4 @@ class News(models.Model):
     link = models.CharField(max_length=200)
     source = models.CharField(max_length=60)
     keyword_id = models.ForeignKey(Keywords, on_delete=models.CASCADE)
+    expiry_date = models.DateTimeField()
