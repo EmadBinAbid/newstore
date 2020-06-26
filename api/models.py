@@ -7,8 +7,8 @@ class Keywords(models.Model):
     created_at = models.DateTimeField(auto_now=True)
 
 class News(models.Model):
-    headline = models.CharField(max_length=200)
-    link = models.CharField(max_length=200)
+    headline = models.CharField(max_length=500)
+    link = models.CharField(max_length=500)
     source = models.CharField(max_length=60)
     keyword_id = models.ForeignKey(Keywords, on_delete=models.CASCADE)
     expiry_date = models.DateTimeField()
