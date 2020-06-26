@@ -21,7 +21,7 @@ To install these dependencies, run the `envsetup.bat` file located inside `./set
 ## Setting up Database
 Newstore uses PostgreSQL database. To install PostgreSQL, please visit: https://www.postgresql.org/download/.
 
-To create Newstore database locally, run the `dbsetup.bat` file located inside `./setup`.
+To create Newstore database locally, run the `dbsetup.bat` file located inside `./setup`. Before executing this file, make sure that you have `postgres` as one of the users of your PostgreSQL instance. If not abided, the command might break for now.
 
 # Endpoints
 - GET /news
