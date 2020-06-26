@@ -3,7 +3,10 @@ from newsapi.newsapi_exception import NewsAPIException
 
 from rest_framework.response import Response
 
-api = NewsApiClient(api_key='14de98af33e3402e989eb0ee030b7841')
+from config.newsapiconfig import get_newsapi_config
+
+newsapiconfig = get_newsapi_config()
+api = NewsApiClient(api_key=newsapiconfig['API_KEY'])
 
 class NewsApi:
     def __init__(self, q):
