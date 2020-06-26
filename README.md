@@ -23,5 +23,7 @@ Newstore uses PostgreSQL database. To install PostgreSQL, please visit: https://
 
 To create Newstore database locally, run the `dbsetup.bat` file located inside `./setup`. Before executing this file, make sure that you have `postgres` as one of the users of your PostgreSQL instance. If not abided, the command might break for now.
 
+Newstore runs on PostgreSQL user `postgres` with password `password` on `localhost:5432` as default. You may change these settings in ./config/dbconfig.py`.
+
 # Endpoints
 - GET /news
