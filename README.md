@@ -12,6 +12,8 @@ Once the environment is set up, you just need to navigate to `./Scripts` and run
 
 - django v2.2.13
 - djangorestframework
+- praw
+- newsapi-python
 
 # Endpoints
 - GET /news
