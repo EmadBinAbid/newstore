@@ -16,12 +16,12 @@ Once the environment is set up, you just need to navigate to `./Scripts` and run
 - praw
 - newsapi-python
 
-To install these dependencies, run the `envsetup.bat` file located in the root folder of this repository.
+To install these dependencies, run the `envsetup.bat` file located inside `./setup`.
 
 ## Setting up Database
 Newstore uses PostgreSQL database. To install PostgreSQL, please visit: https://www.postgresql.org/download/.
 
-To create Newstore database locally, run the `dbsetup.bat` file located in the root folder of this repository.
+To create Newstore database locally, run the `dbsetup.bat` file located inside `./setup`.
 
 # Endpoints
 - GET /news
