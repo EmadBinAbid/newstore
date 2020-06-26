@@ -10,3 +10,4 @@ class News(models.Model):
     headline = models.CharField(max_length=200)
     link = models.CharField(max_length=200)
     source = models.CharField(max_length=60)
+    keyword_id = models.ForeignKey(Keywords, on_delete=models.CASCADE)
