@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+from config.dbconfig import get_db_config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -75,17 +76,18 @@ WSGI_APPLICATION = 'newstore.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
+dbconfig = get_db_config()
 DATABASES = {}
 
 if True:
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'newstore',
-            'USER': 'postgres',
-            'PASSWORD': 'password',
-            'HOST': 'localhost',
-            'PORT': '5432',
+            'ENGINE': dbconfig['ENGINE'],
+            'NAME': dbconfig['NAME'],
+            'USER': dbconfig['USER'],
+            'PASSWORD': dbconfig['PASSWORD'],
+            'HOST': dbconfig['HOST'],
+            'PORT': dbconfig['PORT'],
         }
     }
 else:
