@@ -23,7 +23,19 @@ Newstore uses PostgreSQL database. To install PostgreSQL, please visit: https://
 
 To create Newstore database locally, run the `dbsetup.bat` file located inside `./setup`. Before executing this file, make sure that you have `postgres` as one of the users of your PostgreSQL instance. If not abided, the command might break for now.
 
-Newstore runs on PostgreSQL user `postgres` with password `password` on `localhost:5432` as default. You may change these settings in ./config/dbconfig.py`.
+Newstore runs on PostgreSQL user `postgres` with password `password` on `localhost:5432` as default. You may change these settings in `./config/dbconfig.py`.
+
+## General Configurations
+Apart from `dbconfig.py`, `./config` contains three other configuration files to manage app, Reddit API, and NewsAPI. 
+
+### redditapiconfig.py
+Contains `client_id` and `client_secret` required to connect with Reddit API.
+
+### newsapiconfig.py
+Contains API key to connect with NewsAPI.
+
+### appconfig.py
+Contains general app configuration and settings. You may change these settings to customise the app behaviour. 
 
 # Endpoints
 - GET /news
