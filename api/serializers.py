@@ -4,12 +4,12 @@ from .models import News, Keywords, NewsHistory, Sources
 class NewsSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = News
-        fields = ('headline', 'link', 'source')
+        fields = ('headline', 'link', 'source_id_id')
 
 class NewsHistorySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = NewsHistory
-        fields = ('headline', 'link', 'source')
+        fields = ('headline', 'link', 'source_id_id')
 
 class KeywordsSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
