@@ -20,6 +20,6 @@ class News(models.Model):
 class NewsHistory(models.Model):
     headline = models.CharField(max_length=500)
     link = models.CharField(max_length=500)
-    source = models.CharField(max_length=60)
+    source_id = models.ForeignKey(Sources, on_delete=models.CASCADE)
     keyword_id = models.ForeignKey(Keywords, on_delete=models.CASCADE)
     expiry_date = models.DateTimeField()
