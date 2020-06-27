@@ -6,3 +6,6 @@ def get_data_expiry_timedelta():
         'MINUTES': 15,
         'SECONDS': 0,
     }
+
+def get_log_filename():
+    return 'logs/app.log'
