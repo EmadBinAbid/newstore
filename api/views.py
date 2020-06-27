@@ -47,6 +47,8 @@ def news_list(request) -> Response:
         print(newsList)
 
         if (len(newsList) == 0):
+            News.objects.filter(keyword_id_id=keywordId).delete()
+
             # return database response
             print('from api')
             newsList = nh.NewstoreHandler(searchCategory).getAllNews()
@@ -72,6 +74,8 @@ def news_list(request) -> Response:
             # make an api call
             print('from db')
             serializer = NewsSerializer(newsList, many=True)
+            print("kdjgdfkljhdfkljhsklhjfklhj")
+            print(len(serializer.data))
             return Response(serializer.data)
     except Exception as e:
         return Response({'message': str(e)})
