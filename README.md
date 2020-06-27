@@ -37,5 +37,8 @@ Contains API key to connect with NewsAPI.
 ### appconfig.py
 Contains general app configuration and settings. You may change these settings to customise the app behaviour. 
 
+## Logs
+All the generated logs of Newstore are stored in `./logs`.
+
 # Endpoints
 - GET /news
