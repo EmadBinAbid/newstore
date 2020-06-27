@@ -3,8 +3,8 @@ from django.utils import timezone
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from .models import News, Keywords, NewsHistory
-from .serializers import NewsSerializer, KeywordsSerializer
+from .models import News, Keywords, NewsHistory, Sources
+from .serializers import NewsSerializer, KeywordsSerializer, SourcesSerializer
 from external import newstorehandler as nh
 from config.appconfig import get_data_expiry_timedelta, is_news_history_table_active
 from universal.universal import Universal
@@ -56,8 +56,16 @@ def news_list(request) -> Response:
     except Exception as e:
         return Response({'message': str(e)})
 
+@api_view(['GET'])
+def sources_list(request) -> Response:
+    try:
+        sourcesList = Sources.objects.all()
+        serializer = SourcesSerializer(sourcesList, many=True)
+        return Response(serializer.data)
+    except Exception as e:
+        return Response({'message': str(e)})
 
-def getKeywordId(keyword):
+def getKeywordId(keyword) -> int:
     keywordId = None
 
     # Check if keyword already exists

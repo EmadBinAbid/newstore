@@ -19,4 +19,4 @@ class KeywordsSerializer(serializers.HyperlinkedModelSerializer):
 class SourcesSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Sources
-        fields = ('id', 'source', 'created_at')
+        fields = ('id', 'source')

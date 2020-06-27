@@ -46,4 +46,7 @@ All the generated logs of Newstore are stored in `./logs`.
 
 # Endpoints
 - GET /news, GET /news?query=somekeyword
-    - Usage: This endpoint works as a standalone endpoint as well as accepts a query parameter `query` to search for news against specific keyword.
+    - Usage: This endpoint works as a standalone endpoint as well as accepts a query parameter `query` to search for news against specific keyword. It fetches and returns news from all the supported sources.
+
+- GET /sources
+    - Usage: It fetches and returns all the news sources that are supported by Newstore.
