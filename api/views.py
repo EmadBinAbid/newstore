@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from .models import News, Keywords, NewsHistory, Sources
 from .serializers import NewsSerializer, KeywordsSerializer, SourcesSerializer
 from external import newstorehandler as nh
-from config.appconfig import get_data_expiry_timedelta, is_news_history_table_active
+from config.appconfig import get_data_expiry_timedelta, is_news_history_table_active, get_api_token
 from universal.universal import Universal
 
 import datetime as dt
@@ -18,52 +18,58 @@ log = Logger()
 
 @api_view(['GET'])
 def news_list(request) -> Response:
-    try:
-        searchCategory = 'general'
-        if request.query_params.get('query') != None:
-            searchCategory = request.query_params.get('query')
+    if request.headers.get('Authorization') and request.headers['Authorization'] == get_api_token():
+        try:
+            searchCategory = 'general'
+            if request.query_params.get('query') != None:
+                searchCategory = request.query_params.get('query')
 
-        keywordId = getKeywordId(searchCategory)
+            keywordId = getKeywordId(searchCategory)
 
-        # Check if news has expired
-        newsList = News.objects.filter(keyword_id_id=keywordId, expiry_date__gt=dt.datetime.now())
+            # Check if news has expired
+            newsList = News.objects.filter(keyword_id_id=keywordId, expiry_date__gt=dt.datetime.now())
 
-        if (len(newsList) == 0):
-            # Delete previous records against this keyword
-            News.objects.filter(keyword_id_id=keywordId).delete()
+            if (len(newsList) == 0):
+                # Delete previous records against this keyword
+                News.objects.filter(keyword_id_id=keywordId).delete()
 
-            # Make a fresh API call to all third party APIs
-            newsList = nh.NewstoreHandler(searchCategory).getAllNews()
-            nextTime = dt.datetime.now() + dt.timedelta(minutes=get_data_expiry_timedelta()['MINUTES'])
-            newsSources = Universal.getNewsSources()
+                # Make a fresh API call to all third party APIs
+                newsList = nh.NewstoreHandler(searchCategory).getAllNews()
+                nextTime = dt.datetime.now() + dt.timedelta(minutes=get_data_expiry_timedelta()['MINUTES'])
+                newsSources = Universal.getNewsSources()
 
-            # Add data to newshistory table if flag set to True
-            if is_news_history_table_active():
-                newsObjectsHistoryTable = (NewsHistory(headline=news['headline'], link=news['link'],
-                                source_id_id=newsSources[news['source']], keyword_id_id=keywordId, expiry_date=nextTime) for news in newsList)
-                createdNewsList = NewsHistory.objects.bulk_create(newsObjectsHistoryTable)
+                # Add data to newshistory table if flag set to True
+                if is_news_history_table_active():
+                    newsObjectsHistoryTable = (NewsHistory(headline=news['headline'], link=news['link'],
+                                    source_id_id=newsSources[news['source']], keyword_id_id=keywordId, expiry_date=nextTime) for news in newsList)
+                    createdNewsList = NewsHistory.objects.bulk_create(newsObjectsHistoryTable)
 
-            # Add data to actual News table
-            newsObjects = (News(headline=news['headline'], link=news['link'],
-                                source_id_id=newsSources[news['source']], keyword_id_id=keywordId, expiry_date=nextTime) for news in newsList)
-            createdNewsList = News.objects.bulk_create(newsObjects)
-            serializer = NewsSerializer(createdNewsList, many=True)
-            return Response(serializer.data)
-        else:
-            # Return same data from the DB
-            serializer = NewsSerializer(newsList, many=True)
-            return Response(serializer.data)
-    except Exception as e:
-        return Response({'message': str(e)})
+                # Add data to actual News table
+                newsObjects = (News(headline=news['headline'], link=news['link'],
+                                    source_id_id=newsSources[news['source']], keyword_id_id=keywordId, expiry_date=nextTime) for news in newsList)
+                createdNewsList = News.objects.bulk_create(newsObjects)
+                serializer = NewsSerializer(createdNewsList, many=True)
+                return Response(serializer.data)
+            else:
+                # Return same data from the DB
+                serializer = NewsSerializer(newsList, many=True)
+                return Response(serializer.data)
+        except Exception as e:
+            return Response({'message': str(e)})
+    else:
+        return Response({'message': 'Unauthorized'}, status=401)
 
 @api_view(['GET'])
 def sources_list(request) -> Response:
-    try:
-        sourcesList = Sources.objects.all()
-        serializer = SourcesSerializer(sourcesList, many=True)
-        return Response(serializer.data)
-    except Exception as e:
-        return Response({'message': str(e)})
+    if request.headers.get('Authorization') and request.headers['Authorization'] == get_api_token():
+        try:
+            sourcesList = Sources.objects.all()
+            serializer = SourcesSerializer(sourcesList, many=True)
+            return Response(serializer.data)
+        except Exception as e:
+            return Response({'message': str(e)})
+    else:
+        return Response({'message': 'Unauthorized'}, status=401)
 
 def getKeywordId(keyword) -> int:
     keywordId = None

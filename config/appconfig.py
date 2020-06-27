@@ -12,3 +12,6 @@ def get_log_filename() -> str:
 
 def is_news_history_table_active() -> bool:
     return True
+
+def get_api_token() -> str:
+    return 'wErdTg123STELLICgF5GhK'

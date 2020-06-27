@@ -49,7 +49,7 @@ All the generated logs of Newstore are stored in `./logs`.
 - GET /sources
     - Usage: It fetches and returns all the news sources that are supported by Newstore.
 
-Every endpoint requires and API token that must be provided in the request header against the key `API_TOKEN`. In our promotional stages, we have given free API token to our clients as `wErdTg123STELLICgF5GhK`.
+Every endpoint requires and API token that must be provided in the request header against the key `Authorization`. In our promotional stages, we have given free API token to our clients as `wErdTg123STELLICgF5GhK`.
 
 ## Running the App
 To run this app, navigate to the project's root directory and run `python manage.py runserver` in the terminal. Your application should be up and running at `localhost:8000`.
