@@ -51,6 +51,9 @@ All the generated logs of Newstore are stored in `./logs`.
 
 Every endpoint requires an API token that must be provided in the request header against the key `Authorization`. In our promotional stages, we have given free API token to our clients as `wErdTg123STELLICgF5GhK`.
 
+## Postman Collection
+To save your time creating dummy requests, we have already come to your rescue. You can find a full-fledged ready Postman collection at `./scripts/Newstore.postman_collection.json` containing requests against all the supported endpoints so far. We will keep on updating it as the product grows.
+
 ## Running the App
 To run this app, navigate to the project's root directory and run `python manage.py runserver` in the terminal. Your application should be up and running at `localhost:8000`.
 
