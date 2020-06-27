@@ -1,7 +1,7 @@
 from newsapi.newsapi_client import NewsApiClient
 from newsapi.newsapi_exception import NewsAPIException
 from rest_framework.response import Response
-from config.newsapiconfig import get_newsapi_config
+from config.newsapiconfig import get_newsapi_config, get_name
 
 newsapiconfig = get_newsapi_config()
 api = NewsApiClient(api_key=newsapiconfig['API_KEY'])
@@ -9,6 +9,7 @@ api = NewsApiClient(api_key=newsapiconfig['API_KEY'])
 class NewsApi:
     def __init__(self, q):
         self.q = q
+        self.name = get_name()
         self.news = list()
     
     def getNews(self) -> list:
@@ -19,7 +20,7 @@ class NewsApi:
                 self.news.append({
                     'headline': news['title'],
                     'link': news['url'],
-                    'source': 'newsapi'
+                    'source': self.name
                 })
 
             return self.news
