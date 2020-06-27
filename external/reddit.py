@@ -17,13 +17,13 @@ class RedditApi:
             self.q = 'news'
         else:
             self.q = q
-        self.name = get_name()
+        self.name = get_name()                          # Getting name from config for consistency
         self.news = list()
 
     def getNews(self) -> list:
         try:
             subreddit = reddit.subreddit(self.q)
-            responseObject = subreddit.hot()
+            responseObject = subreddit.hot()            # API call
 
             for submission in responseObject:
                 self.news.append({

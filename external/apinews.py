@@ -9,12 +9,12 @@ api = NewsApiClient(api_key=newsapiconfig['API_KEY'])
 class NewsApi:
     def __init__(self, q):
         self.q = q
-        self.name = get_name()
+        self.name = get_name()                                  # Getting name from config for consistency
         self.news = list()
     
     def getNews(self) -> list:
         try:
-            responseObject = api.get_everything(q=self.q)
+            responseObject = api.get_everything(q=self.q)       # API call
             newsList = responseObject['articles']
             for news in newsList:
                 self.news.append({
