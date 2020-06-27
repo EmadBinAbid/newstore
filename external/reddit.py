@@ -15,7 +15,10 @@ reddit = praw.Reddit(client_id=redditapiconfig['CLIENT_ID'],
 
 class RedditApi:
     def __init__(self, q):
-        self.q = q
+        if q == 'general':
+            self.q = 'news'
+        else:
+            self.q = q
         self.news = list()
     
     def getNews(self):
