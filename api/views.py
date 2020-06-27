@@ -7,14 +7,18 @@ from .models import News, Keywords
 from .serializers import NewsSerializer, KeywordsSerializer
 
 import datetime as dt
+import logging
+# This retrieves a Python logging instance (or creates it)
+# logger = logging.getLogger(__name__)
 
 from external import newstorehandler as nh
+from config.appconfig import get_data_expiry_timedelta
 
 # Create your views here.
 
 @api_view(['GET'])
 def news_list(request):
-    print("news_list")
+    logging.info('In news_list')
     try:
         searchCategory = 'general'
         if request.query_params.get('query') != None:
@@ -47,7 +51,7 @@ def news_list(request):
             print('from api')
             newsList = nh.NewstoreHandler(searchCategory).getAllNews()
 
-            nextTime = dt.datetime.now() + dt.timedelta(minutes=15)
+            nextTime = dt.datetime.now() + dt.timedelta(minutes=get_data_expiry_timedelta()['MINUTES'])
 
             newsObjects = (News(headline=news['headline'], link=news['link'],
                                 source=news['source'], keyword_id_id=keywordId, expiry_date=nextTime) for news in newsList)
