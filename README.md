@@ -25,6 +25,8 @@ To create Newstore database locally, run the `dbsetup.bat` file located inside `
 
 Newstore runs on PostgreSQL user `postgres` with password `password` on `localhost:5432` as default. You may change these settings in `./config/dbconfig.py`.
 
+Newstore, by default, stores the history of news that are accumulated over time. You can turn off this functionality by setting `is_news_history_table_active` to `False` in `appconfig.py`.
+
 ## General Configurations
 Apart from `dbconfig.py`, `./config` contains three other configuration files to manage app, Reddit API, and NewsAPI. 
 
@@ -39,6 +41,8 @@ Contains general app configuration and settings. You may change these settings t
 
 ## Logs
 All the generated logs of Newstore are stored in `./logs`.
+
+## 
 
 # Endpoints
 - GET /news
