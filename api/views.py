@@ -3,22 +3,22 @@ from django.utils import timezone
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from .models import News, Keywords
+from .models import News, Keywords, NewsHistory
 from .serializers import NewsSerializer, KeywordsSerializer
+from external import newstorehandler as nh
+from config.appconfig import get_data_expiry_timedelta, is_news_history_table_active
 
 import datetime as dt
-import logging
-# This retrieves a Python logging instance (or creates it)
-# logger = logging.getLogger(__name__)
 
-from external import newstorehandler as nh
-from config.appconfig import get_data_expiry_timedelta
+from nstorelogger.logger import Logger
+log = Logger()
 
 # Create your views here.
 
 @api_view(['GET'])
 def news_list(request):
-    logging.info('In news_list')
+    log.debug('Hi this is emadddddd')
+    log.error('Emad :((((')
     try:
         searchCategory = 'general'
         if request.query_params.get('query') != None:
@@ -52,6 +52,14 @@ def news_list(request):
             newsList = nh.NewstoreHandler(searchCategory).getAllNews()
 
             nextTime = dt.datetime.now() + dt.timedelta(minutes=get_data_expiry_timedelta()['MINUTES'])
+
+            if is_news_history_table_active():
+                newsObjectsHistoryTable = (NewsHistory(headline=news['headline'], link=news['link'],
+                                source=news['source'], keyword_id_id=keywordId, expiry_date=nextTime) for news in newsList)
+                # bulk_create has its own demerits
+                createdNewsList = NewsHistory.objects.bulk_create(newsObjectsHistoryTable)
+                
+
 
             newsObjects = (News(headline=news['headline'], link=news['link'],
                                 source=news['source'], keyword_id_id=keywordId, expiry_date=nextTime) for news in newsList)
