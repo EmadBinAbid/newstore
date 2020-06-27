@@ -21,7 +21,7 @@ class RedditApi:
             self.q = q
         self.news = list()
     
-    def getNews(self):
+    def getNews(self) -> list:
         try:
             subreddit = reddit.subreddit(self.q)
             responseObject = subreddit.hot()

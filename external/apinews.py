@@ -1,8 +1,6 @@
 from newsapi.newsapi_client import NewsApiClient
 from newsapi.newsapi_exception import NewsAPIException
-
 from rest_framework.response import Response
-
 from config.newsapiconfig import get_newsapi_config
 
 newsapiconfig = get_newsapi_config()
@@ -13,7 +11,7 @@ class NewsApi:
         self.q = q
         self.news = list()
     
-    def getNews(self):
+    def getNews(self) -> list:
         try:
             responseObject = api.get_everything(q=self.q)
             newsList = responseObject['articles']

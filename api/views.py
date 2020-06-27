@@ -16,7 +16,7 @@ log = Logger()
 # Create your views here.
 
 @api_view(['GET'])
-def news_list(request):
+def news_list(request) -> Response:
     log.debug('Hi this is emadddddd')
     log.error('Emad :((((')
     try:
