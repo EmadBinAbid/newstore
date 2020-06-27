@@ -7,6 +7,7 @@ from .models import News, Keywords, NewsHistory
 from .serializers import NewsSerializer, KeywordsSerializer
 from external import newstorehandler as nh
 from config.appconfig import get_data_expiry_timedelta, is_news_history_table_active
+from universal.universal import Universal
 
 import datetime as dt
 
@@ -55,16 +56,18 @@ def news_list(request) -> Response:
 
             nextTime = dt.datetime.now() + dt.timedelta(minutes=get_data_expiry_timedelta()['MINUTES'])
 
+            newsSources = Universal.getNewsSources()
             if is_news_history_table_active():
                 newsObjectsHistoryTable = (NewsHistory(headline=news['headline'], link=news['link'],
-                                source=news['source'], keyword_id_id=keywordId, expiry_date=nextTime) for news in newsList)
+                                source_id_id=newsSources[news['source']], keyword_id_id=keywordId, expiry_date=nextTime) for news in newsList)
                 # bulk_create has its own demerits
                 createdNewsList = NewsHistory.objects.bulk_create(newsObjectsHistoryTable)
                 
 
+            # get id from initialisation process here. id is stored in cache
 
             newsObjects = (News(headline=news['headline'], link=news['link'],
-                                source=news['source'], keyword_id_id=keywordId, expiry_date=nextTime) for news in newsList)
+                                source_id_id=newsSources[news['source']], keyword_id_id=keywordId, expiry_date=nextTime) for news in newsList)
 
             # bulk_create has its own demerits
             createdNewsList = News.objects.bulk_create(newsObjects)
