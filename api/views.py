@@ -18,67 +18,57 @@ log = Logger()
 
 @api_view(['GET'])
 def news_list(request) -> Response:
-    log.debug('Hi this is emadddddd')
-    log.error('Emad :((((')
     try:
         searchCategory = 'general'
         if request.query_params.get('query') != None:
             searchCategory = request.query_params.get('query')
 
-        # search for keyword in db
-        keywordsList = Keywords.objects.filter(
-            keyword=searchCategory).values('id')
-        keywordId = None
-        if (len(keywordsList) == 0):
-            keywordsSerializer = KeywordsSerializer(
-                data={'keyword': searchCategory})
-            if keywordsSerializer.is_valid():
-                keywordsSerializer.save()
+        keywordId = getKeywordId(searchCategory)
 
-            keywordId = Keywords.objects.filter(
-                keyword=searchCategory).values('id')[0]['id']
-        else:
-            keywordId = keywordsList[0]['id']
-
-        print(keywordId)
-
-        # if keyword not found, insert this keyword else fetch results from db against this keyword
-        newsList = News.objects.filter(
-            keyword_id_id=keywordId, expiry_date__gt=dt.datetime.now())
-        print(newsList)
+        # Check if news has expired
+        newsList = News.objects.filter(keyword_id_id=keywordId, expiry_date__gt=dt.datetime.now())
 
         if (len(newsList) == 0):
+            # Delete previous records against this keyword
             News.objects.filter(keyword_id_id=keywordId).delete()
 
-            # return database response
-            print('from api')
+            # Make a fresh API call to all third party APIs
             newsList = nh.NewstoreHandler(searchCategory).getAllNews()
-
             nextTime = dt.datetime.now() + dt.timedelta(minutes=get_data_expiry_timedelta()['MINUTES'])
-
             newsSources = Universal.getNewsSources()
+
+            # Add data to newshistory table if flag set to True
             if is_news_history_table_active():
                 newsObjectsHistoryTable = (NewsHistory(headline=news['headline'], link=news['link'],
                                 source_id_id=newsSources[news['source']], keyword_id_id=keywordId, expiry_date=nextTime) for news in newsList)
-                # bulk_create has its own demerits
                 createdNewsList = NewsHistory.objects.bulk_create(newsObjectsHistoryTable)
-                
 
-            # get id from initialisation process here. id is stored in cache
-
+            # Add data to actual News table
             newsObjects = (News(headline=news['headline'], link=news['link'],
                                 source_id_id=newsSources[news['source']], keyword_id_id=keywordId, expiry_date=nextTime) for news in newsList)
-
-            # bulk_create has its own demerits
             createdNewsList = News.objects.bulk_create(newsObjects)
             serializer = NewsSerializer(createdNewsList, many=True)
             return Response(serializer.data)
         else:
-            # make an api call
-            print('from db')
+            # Return same data from the DB
             serializer = NewsSerializer(newsList, many=True)
-            print("kdjgdfkljhdfkljhsklhjfklhj")
-            print(len(serializer.data))
             return Response(serializer.data)
     except Exception as e:
         return Response({'message': str(e)})
+
+
+def getKeywordId(keyword):
+    keywordId = None
+
+    # Check if keyword already exists
+    keywordsList = Keywords.objects.filter(keyword=keyword).values('id')
+    if (len(keywordsList) == 0):
+        # Add keyword to DB if not already present
+        keywordsSerializer = KeywordsSerializer(data={'keyword': keyword})
+        if keywordsSerializer.is_valid():
+            keywordsSerializer.save()
+        keywordId = Keywords.objects.filter(keyword=keyword).values('id')[0]['id']
+    else:
+        # Return keyword id if present
+        keywordId = keywordsList[0]['id']
+    return keywordId
