@@ -6,6 +6,10 @@ class Keywords(models.Model):
     keyword = models.CharField(max_length=60)
     created_at = models.DateTimeField(auto_now=True)
 
+class Sources(models.Model):
+    source = models.CharField(max_length=60)
+    created_at = models.DateTimeField(auto_now=True)
+
 class News(models.Model):
     headline = models.CharField(max_length=500)
     link = models.CharField(max_length=500)
