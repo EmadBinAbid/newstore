@@ -8,3 +8,6 @@ def get_redditapi_config() -> dict:
         'PASSWORD': '',
         'USER_AGENT': 'newzologyv1'
     }
+
+def get_name() -> str:
+    return 'reddit'
