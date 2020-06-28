@@ -40,7 +40,7 @@ Contains API key to connect with NewsAPI.
 Contains general app configuration and settings. You may change these settings to customise the app behaviour. 
 
 ## Logs
-All the generated logs of Newstore are stored in `./logs`.
+All the generated logs of Newstore are stored in `./logs`. When the server is up and running, the logs get written to `app.log` file whereas the logs of unit tests are stored in a separate file `test.log`.
 
 ## Endpoints
 - `GET /news`, `GET /news?query=somekeyword`
@@ -55,7 +55,7 @@ Every endpoint requires an API token that must be provided in the request header
 To save your time creating dummy requests, we have already come to your rescue. You can find a full-fledged ready Postman collection at `./scripts/Newstore.postman_collection.json` containing requests against all the supported endpoints so far. We will keep on updating it as the product grows.
 
 ## Unit Testing
-Run `python manage.py test` in the root directory to run all the unit tests.
+Run `python manage.py test` in the root directory to run all the unit tests. Logs of unit tests can be found in `./logs/test.log`.
 
 ## Future Directions
 We plan to add a following set of functionalities in the coming versions of Newstore. Stay connected.
