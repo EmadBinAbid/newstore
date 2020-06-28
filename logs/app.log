@@ -1,1 +1,18 @@
-2020-06-27 18:41:47,402:DEBUG:views.py:news_list:In news_list
+2020-06-28 19:38:17,171:DEBUG:News source already reddit present in DB
+2020-06-28 19:38:17,173:DEBUG:News source already newsapi present in DB
+2020-06-28 19:38:17,175:DEBUG:Fetched news sources from DB and stored in static instance
+2020-06-28 19:38:19,250:DEBUG:News source already reddit present in DB
+2020-06-28 19:38:19,252:DEBUG:News source already newsapi present in DB
+2020-06-28 19:38:19,253:DEBUG:Fetched news sources from DB and stored in static instance
+2020-06-28 19:38:25,863:DEBUG:GET /sources
+2020-06-28 19:38:25,864:DEBUG:Returned API response
+2020-06-28 19:38:41,498:DEBUG:GET /news
+2020-06-28 19:38:41,580:DEBUG:Deleted existing records against football keyword
+2020-06-28 19:38:42,375:DEBUG:Fetched data from NewsAPI
+2020-06-28 19:38:45,354:DEBUG:Fetched data from Reddit API
+2020-06-28 19:38:45,355:DEBUG:Aggregated responses from all supported third party APIs
+2020-06-28 19:38:45,388:DEBUG:Saved records to news history table
+2020-06-28 19:38:45,408:DEBUG:Added new records to news table
+2020-06-28 19:38:45,409:DEBUG:Returned API response
+2020-06-28 19:39:01,653:DEBUG:GET /news
+2020-06-28 19:39:01,735:DEBUG:Returned existing records from Newstore DB against football keyword
