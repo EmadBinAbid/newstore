@@ -88,7 +88,7 @@ def sources_list(request) -> Response:
         return Response({'message': 'Unauthorized'}, status=401)
 
 def getKeywordId(keyword) -> int:
-    keywordId = None
+    keywordId = -1
 
     # Check if keyword already exists
     keywordsList = Keywords.objects.filter(keyword=keyword).values('id')
