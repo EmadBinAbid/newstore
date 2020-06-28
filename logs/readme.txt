@@ -1,0 +1,1 @@
+These are the logs of Newstore app

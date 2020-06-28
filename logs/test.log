@@ -1,0 +1,40 @@
+2020-06-28 19:37:39,119:DEBUG:News source already reddit present in DB
+2020-06-28 19:37:39,120:DEBUG:News source already newsapi present in DB
+2020-06-28 19:37:39,123:DEBUG:Fetched news sources from DB and stored in static instance
+2020-06-28 19:37:40,629:DEBUG:Running test for checking valid keyword id
+2020-06-28 19:37:40,635:DEBUG:Test ended
+2020-06-28 19:37:40,636:DEBUG:Running test on GET /news with auth
+2020-06-28 19:37:40,642:DEBUG:GET /news
+2020-06-28 19:37:40,662:DEBUG:Deleted existing records against general keyword
+2020-06-28 19:37:41,276:DEBUG:Fetched data from NewsAPI
+2020-06-28 19:37:43,988:DEBUG:Fetched data from Reddit API
+2020-06-28 19:37:43,989:DEBUG:Aggregated responses from all supported third party APIs
+2020-06-28 19:37:44,010:DEBUG:Saved records to news history table
+2020-06-28 19:37:44,031:DEBUG:Added new records to news table
+2020-06-28 19:37:44,031:DEBUG:Returned API response
+2020-06-28 19:37:44,036:DEBUG:Test ended
+2020-06-28 19:37:44,036:DEBUG:Running test on GET /news without auth
+2020-06-28 19:37:44,038:DEBUG:GET /news
+2020-06-28 19:37:44,038:ERROR:No Authorization header
+2020-06-28 19:37:44,038:DEBUG:Test ended
+2020-06-28 19:37:44,039:DEBUG:Running test on GET /sources with auth
+2020-06-28 19:37:44,040:DEBUG:GET /sources
+2020-06-28 19:37:44,040:DEBUG:Returned API response
+2020-06-28 19:37:44,042:DEBUG:Test ended
+2020-06-28 19:37:44,042:DEBUG:Running test on GET /sources without auth
+2020-06-28 19:37:44,043:DEBUG:GET /sources
+2020-06-28 19:37:44,043:ERROR:No Authorization header
+2020-06-28 19:37:44,043:DEBUG:Test ended
+2020-06-28 19:37:44,044:DEBUG:Running test on NewsAPI get news call
+2020-06-28 19:37:45,900:DEBUG:Fetched data from NewsAPI
+2020-06-28 19:37:45,901:DEBUG:Test ended
+2020-06-28 19:37:45,902:DEBUG:Running test on all third-party news aggregation
+2020-06-28 19:37:46,621:DEBUG:Fetched data from NewsAPI
+2020-06-28 19:37:47,943:DEBUG:Fetched data from Reddit API
+2020-06-28 19:37:47,943:DEBUG:Aggregated responses from all supported third party APIs
+2020-06-28 19:37:47,944:DEBUG:Test ended
+2020-06-28 19:37:47,944:DEBUG:Running test on Reddit API get news call
+2020-06-28 19:37:49,320:DEBUG:Fetched data from Reddit API
+2020-06-28 19:37:49,335:DEBUG:Test ended
+2020-06-28 19:37:49,335:DEBUG:Running test on get news sources from static in-memory instance
+2020-06-28 19:37:49,335:DEBUG:Test ended

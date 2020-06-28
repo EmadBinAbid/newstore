@@ -3,6 +3,7 @@
 import os
 import sys
 
+from nstorelogger.logger import Logger
 
 def main():
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'newstore.settings')
@@ -14,6 +15,11 @@ def main():
             "available on your PYTHONPATH environment variable? Did you "
             "forget to activate a virtual environment?"
         ) from exc
+    
+    if sys.argv[1] == 'test':
+        log = Logger(True)
+    else:
+        log = Logger()
     execute_from_command_line(sys.argv)
 
 
