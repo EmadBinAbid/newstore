@@ -1,6 +1,6 @@
 import logging
 
-from config.appconfig import get_log_filename
+from config.appconfig import get_log_filename, get_testlog_filename
 
 class Logger(object):
     """
@@ -10,11 +10,15 @@ class Logger(object):
     """
 
     class __Logger:
-        def __init__(self):
+        def __init__(self, isTestActive=False):
             self.logger = logging.getLogger(__name__)
             self.logger.setLevel(logging.DEBUG)
             formatter = logging.Formatter('%(asctime)s:%(levelname)s:%(message)s')
-            self.fileHandler = logging.FileHandler(get_log_filename())
+
+            if isTestActive == False:
+                self.fileHandler = logging.FileHandler(get_log_filename())
+            else:
+                self.fileHandler = logging.FileHandler(get_testlog_filename())
             self.fileHandler.setFormatter(formatter)
 
         def debug(self, message) -> None:
@@ -48,9 +52,9 @@ class Logger(object):
             self.logger.error(message)
             
     instance = None
-    def __new__(cls): # __new__ always a classmethod
+    def __new__(cls, isTestActive=False): # __new__ always a classmethod
         if not Logger.instance:
-            Logger.instance = Logger.__Logger()
+            Logger.instance = Logger.__Logger(isTestActive)
         return Logger.instance
     def __getattr__(self, name):
         return getattr(self.instance, name)
