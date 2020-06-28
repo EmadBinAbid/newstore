@@ -43,10 +43,10 @@ Contains general app configuration and settings. You may change these settings t
 All the generated logs of Newstore are stored in `./logs`.
 
 ## Endpoints
-- GET /news, GET /news?query=somekeyword
+- `GET /news`, `GET /news?query=somekeyword`
     - Usage: This endpoint works as a standalone endpoint as well as accepts a query parameter `query` to search for news against specific keyword. It fetches and returns news from all the supported sources.
 
-- GET /sources
+- `GET /sources`
     - Usage: It fetches and returns all the news sources that are supported by Newstore.
 
 Every endpoint requires an API token that must be provided in the request header against the key `Authorization`. In our promotional stages, we have given free API token to our clients as `wErdTg123STELLICgF5GhK`.
