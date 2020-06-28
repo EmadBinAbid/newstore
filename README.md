@@ -55,7 +55,7 @@ Every endpoint requires an API token that must be provided in the request header
 To save your time creating dummy requests, we have already come to your rescue. You can find a full-fledged ready Postman collection at `./scripts/Newstore.postman_collection.json` containing requests against all the supported endpoints so far. We will keep on updating it as the product grows.
 
 ## Unit Testing
-Run `python -m unittest` in the root directory to run all the unit tests.
+Run `python manage.py test` in the root directory to run all the unit tests.
 
 ## Future Directions
 We plan to add a following set of functionalities in the coming versions of Newstore. Stay connected.
