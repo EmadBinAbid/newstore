@@ -61,6 +61,7 @@ Run `python manage.py test` in the root directory to run all the unit tests. Log
 We plan to add a following set of functionalities in the coming versions of Newstore. Stay connected.
 - Save logs to DB
 - Add a scheduler that deletes the expired records from database
+- Integration testing
 
 ## Running the App
 To run this app, navigate to the project's root directory and run `python manage.py runserver` in the terminal. Your application should be up and running at `localhost:8000`.
