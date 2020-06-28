@@ -10,6 +10,17 @@ from nstorelogger.logger import Logger
 log = Logger()
 
 def add_sources() -> None:
+    """
+    Adds news sources in 'sources' table in DB if not already present. Gets
+    called only when server boot/reboot happens. 
+
+    Parameters:
+    None
+
+    Returns:
+    None
+            
+    """
     try:
         # Reddit
         sourcesList = Sources.objects.filter(source=reddit_name()).values('id')     # DB call

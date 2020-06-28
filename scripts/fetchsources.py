@@ -10,6 +10,18 @@ from nstorelogger.logger import Logger
 log = Logger()
 
 def fetch_sources() -> None:
+    """
+    Fetches news sources from 'sources' table in DB and sets the results in an
+    static dictionary instance to be available through the scope of application. 
+    Gets called only when server boot/reboot happens. 
+
+    Parameters:
+    None
+
+    Returns:
+    None
+            
+    """
     try:
         sourcesList = Sources.objects.all()                         # DB call
         serializer = SourcesSerializer(sourcesList, many=True)
