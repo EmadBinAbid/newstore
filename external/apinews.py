@@ -3,6 +3,9 @@ from newsapi.newsapi_exception import NewsAPIException
 from rest_framework.response import Response
 from config.newsapiconfig import get_newsapi_config, get_name
 
+from nstorelogger.logger import Logger
+log = Logger()
+
 newsapiconfig = get_newsapi_config()
 api = NewsApiClient(api_key=newsapiconfig['API_KEY'])
 
@@ -23,8 +26,11 @@ class NewsApi:
                     'source': self.name
                 })
 
+            log.debug('Fetched data from NewsAPI')
             return self.news
         except NewsAPIException as e:
+            log.error('NewsAPI Exception:' + str(e))
             raise Exception("NewsAPI Exception: {}.".format(str(e)))
         except Exception as e:
-            raise Exception("Newzology Exception: {}.".format(str(e)))
+            log.error('Newstore Exception:' + str(e))
+            raise Exception("Newstore Exception: {}.".format(str(e)))

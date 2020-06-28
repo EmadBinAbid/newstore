@@ -3,6 +3,9 @@ from praw.exceptions import APIException
 from rest_framework.response import Response
 from config.redditapiconfig import get_redditapi_config, get_name
 
+from nstorelogger.logger import Logger
+log = Logger()
+
 redditapiconfig = get_redditapi_config()
 reddit = praw.Reddit(client_id=redditapiconfig['CLIENT_ID'],
                      client_secret=redditapiconfig['CLIENT_SECRET'],
@@ -31,9 +34,13 @@ class RedditApi:
                     'link': submission.url,
                     'source': self.name
                 })
+            
+            log.debug('Fetched data from Reddit API')
             return self.news
 
         except APIException as e:
+            log.error('RedditAPI Exception:' + str(e))
             raise Exception("RedditAPI Exception: {}.".format(str(e)))
         except Exception as e:
-            raise Exception("Newzology Exception: {}.".format(str(e)))
+            log.error('Newstore Exception:' + str(e))
+            raise Exception("Newstore Exception: {}.".format(str(e)))

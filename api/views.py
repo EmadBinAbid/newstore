@@ -18,6 +18,7 @@ log = Logger()
 
 @api_view(['GET'])
 def news_list(request) -> Response:
+    log.debug('GET /news')
     if request.headers.get('Authorization') and request.headers['Authorization'] == get_api_token():
         try:
             searchCategory = 'general'
@@ -32,6 +33,7 @@ def news_list(request) -> Response:
             if (len(newsList) == 0):
                 # Delete previous records against this keyword
                 News.objects.filter(keyword_id_id=keywordId).delete()
+                log.debug('Deleted existing records against ' + searchCategory + ' keyword')
 
                 # Make a fresh API call to all third party APIs
                 newsList = nh.NewstoreHandler(searchCategory).getAllNews()
@@ -43,32 +45,46 @@ def news_list(request) -> Response:
                     newsObjectsHistoryTable = (NewsHistory(headline=news['headline'], link=news['link'],
                                     source_id_id=newsSources[news['source']], keyword_id_id=keywordId, expiry_date=nextTime) for news in newsList)
                     createdNewsList = NewsHistory.objects.bulk_create(newsObjectsHistoryTable)
+                    log.debug('Saved records to news history table')
 
                 # Add data to actual News table
                 newsObjects = (News(headline=news['headline'], link=news['link'],
                                     source_id_id=newsSources[news['source']], keyword_id_id=keywordId, expiry_date=nextTime) for news in newsList)
                 createdNewsList = News.objects.bulk_create(newsObjects)
+                log.debug('Added new records to news table')
+
                 serializer = NewsSerializer(createdNewsList, many=True)
+
+                log.debug('Returned API response')
                 return Response(serializer.data)
             else:
                 # Return same data from the DB
                 serializer = NewsSerializer(newsList, many=True)
+                log.debug('Returned existing records from Newstore DB against ' + searchCategory + ' keyword')
+
                 return Response(serializer.data)
         except Exception as e:
-            return Response({'message': str(e)})
+            log.error('Controller exception: ' + str(e))
+            return Response({'message': str(e)}, status=400)
     else:
+        log.error('No Authorization header')
         return Response({'message': 'Unauthorized'}, status=401)
 
 @api_view(['GET'])
 def sources_list(request) -> Response:
+    log.debug('GET /sources')
     if request.headers.get('Authorization') and request.headers['Authorization'] == get_api_token():
         try:
             sourcesList = Sources.objects.all()
             serializer = SourcesSerializer(sourcesList, many=True)
+            log.debug('Returned API response')
+            
             return Response(serializer.data)
         except Exception as e:
-            return Response({'message': str(e)})
+            log.error('Controller exception: ' + str(e))
+            return Response({'message': str(e)}, status=400)
     else:
+        log.error('No Authorization header')
         return Response({'message': 'Unauthorized'}, status=401)
 
 def getKeywordId(keyword) -> int:
